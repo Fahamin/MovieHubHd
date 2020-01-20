@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homeMID"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Home" />
+        <item
+            android:id="@+id/catagorisMID"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Catagories" />
+        <item
+            android:id="@+id/actionMID"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Action Movie" />
+        <item
+            android:id="@+id/advencherMID"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Adventure Movie" />
+        <item
+            android:id="@+id/animationMID"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Animation Movie" />
+        <item
+            android:id="@+id/comedyMID"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Comedy Movie" />
+        <item
+            android:id="@+id/crimeMID"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Crime Movie" />
+        <item
+            android:id="@+id/HorrorMID"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Horror Movie" />
+        <item
+            android:id="@+id/romanceMID"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Romance Movie" />
+        <item
+            android:id="@+id/sportMID"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Sport Movie" />
+        <item
+            android:id="@+id/thelierMID"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Thriller Movie" />
+        <item
+            android:id="@+id/warMID"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="War Movie" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_send" />
+        </menu>
+    </item>
+
+</menu>

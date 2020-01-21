@@ -2,6 +2,7 @@ package movie.hd.moviehubhd.model;
 
 public class MovieModel {
 
+    int id;
     String key_id;
     String title;
     String description;
@@ -9,13 +10,22 @@ public class MovieModel {
     String date;
     String link;
 
-    public MovieModel(String key_id, String title, String description, String length, String date, String link) {
+    public MovieModel(int id, String key_id, String title, String description, String length, String date, String link) {
+        this.id = id;
         this.key_id = key_id;
         this.title = title;
         this.description = description;
         this.length = length;
         this.date = date;
         this.link = link;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getKey_id() {

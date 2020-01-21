@@ -9,6 +9,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import movie.hd.moviehubhd.R;
+import movie.hd.moviehubhd.fragment.ActionMovie;
+import movie.hd.moviehubhd.fragment.AdventureMovie;
+import movie.hd.moviehubhd.fragment.AnimationMovie;
+import movie.hd.moviehubhd.fragment.ComedyMovie;
+import movie.hd.moviehubhd.fragment.CrimeMovie;
+import movie.hd.moviehubhd.fragment.HorrorMovie;
+import movie.hd.moviehubhd.fragment.RomanceMovie;
 import movie.hd.moviehubhd.fragment.SportMovie;
 import movie.hd.moviehubhd.fragment.ThrillerMovie;
 import movie.hd.moviehubhd.fragment.WarMovie;
@@ -34,13 +41,41 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if(position == 0)
         {
-            return  new WarMovie();
+            return  new ActionMovie();
         }
         if(position == 1)
         {
-            return  new ThrillerMovie();
+            return  new AnimationMovie();
         }
         if(position == 2)
+        {
+            return  new HorrorMovie();
+        }
+        if(position == 3)
+        {
+            return  new RomanceMovie();
+        }
+        if(position == 4)
+        {
+            return  new AdventureMovie();
+        }
+        if(position == 5)
+        {
+            return  new WarMovie();
+        }
+        if(position == 6)
+        {
+            return  new ComedyMovie();
+        }
+        if(position == 7)
+        {
+            return  new ThrillerMovie();
+        }
+        if(position == 8)
+        {
+            return  new CrimeMovie();
+        }
+        if(position == 9)
         {
             return  new SportMovie();
         }
@@ -58,6 +93,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 3;
+        return 10;
     }
 }

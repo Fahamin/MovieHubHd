@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
@@ -28,7 +29,7 @@ import movie.hd.moviehubhd.searchfile.FilterManager;
 import movie.hd.moviehubhd.ui.main.SectionsPagerAdapter;
 
 
-public class TabAct extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class TabAct extends AppCompatActivity {
 
 
     public SearchView searchView;
@@ -59,6 +60,14 @@ public class TabAct extends AppCompatActivity implements SearchView.OnQueryTextL
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null)
+        {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +81,7 @@ public class TabAct extends AppCompatActivity implements SearchView.OnQueryTextL
         return instance.filterManager; // return the observable class
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
@@ -104,5 +113,5 @@ public class TabAct extends AppCompatActivity implements SearchView.OnQueryTextL
 
         filterManager.setQuery(newText); // update the observable value
         return true;
-    }
+    }*/
 }

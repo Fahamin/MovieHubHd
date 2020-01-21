@@ -16,7 +16,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_tab">TabAct</string>
+    <string name="title_activity_tab">Movie Category</string>
 
     <string name="tab_text_1">ACTION</string>
     <string name="tab_text_2">ANIMATION</string>

@@ -13,17 +13,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+
+import com.smarteist.autoimageslider.DefaultSliderView;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderLayout;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import movie.hd.moviehubhd.R;
+import movie.hd.moviehubhd.activity.MainActivity;
 import movie.hd.moviehubhd.adapter.HomeAdapter;
 import movie.hd.moviehubhd.model.DataHomeModel;
 import movie.hd.moviehubhd.model.MovieModel;
 
 
 public class HomeFragment extends Fragment {
+
+    SliderLayout sliderLayout;
 
 
     RecyclerView recyclerView;
@@ -58,7 +70,17 @@ public class HomeFragment extends Fragment {
 
         homeList = new ArrayList<>();
 
+        sliderLayout = view.findViewById(R.id.imageSlider);
+        sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
+        sliderLayout.setScrollTimeInSec(5); //set scroll delay in seconds :
+        setSliderViews();
+        setSliderViews();
+
+
         recyclerView = view.findViewById(R.id.homeRecleviewID);
+
+
         actionMovieList = new ArrayList<>();
         adventureMovieList = new ArrayList<>();
         animationMovieList = new ArrayList<>();
@@ -69,6 +91,7 @@ public class HomeFragment extends Fragment {
         sportMovieList = new ArrayList<>();
         thillerMovieList = new ArrayList<>();
         warMovieList = new ArrayList<>();
+
 
         warMovieFun();
         thillerMovieFun();
@@ -98,6 +121,50 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
+
+    private void setSliderViews() {
+        for (int i = 0; i <= 4; i++) {
+
+            DefaultSliderView sliderView = new DefaultSliderView(getContext());
+
+            switch (i) {
+                case 0:
+                    sliderView.setImageDrawable(R.drawable.ic_menu_camera);
+                    sliderView.setDescription("Action");
+                    break;
+                case 1:
+                    sliderView.setImageDrawable(R.drawable.ic_menu_gallery);
+                    sliderView.setDescription("war");
+                    break;
+                case 2:
+                    sliderView.setImageDrawable(R.drawable.ic_menu_manage);
+                    sliderView.setDescription("heelo");
+                    break;
+
+                case 3:
+                    sliderView.setImageDrawable(R.drawable.ic_menu_share);
+                    sliderView.setDescription("crime");
+                  //  sliderView.setImageUrl("https://images.pexels.com/photos/547114/pexels-photo-547114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+                    break;
+
+            }
+
+            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            final int finalI = i;
+            sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
+                @Override
+                public void onSliderClick(SliderView sliderView) {
+                    Toast.makeText(getContext(), "This is slider " + (finalI + 1), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            //at last add this view in your layout :
+            sliderLayout.addSliderView(sliderView);
+        }
+    }
+
+
 
     private void warMovieFun() {
         warMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import movie.hd.moviehubhd.R;
 import movie.hd.moviehubhd.model.MovieModel;
@@ -24,20 +26,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     Context context;
     RecyclerView recyclerView;
-    ArrayList<MovieModel> movieList,searchList;
+    List<MovieModel> movieList,searchList;
 
-    public MovieAdapter(Context context, RecyclerView recyclerView, ArrayList<MovieModel> movieList) {
+    public MovieAdapter(Context context, RecyclerView recyclerView, List<MovieModel> movieList) {
         this.context = context;
         this.recyclerView = recyclerView;
         this.movieList = movieList;
         this.searchList = movieList;
     }
 
+    public MovieAdapter(List<MovieModel> movieList, Context context) {
+        this.context = context;
+        this.movieList = movieList;
+    }
+
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.movie_view, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_layout_movie, null);
 
         return new MovieHolder(view);
     }
@@ -45,14 +52,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
 
-        holder.titleTxt.setText(movieList.get(position).getTitle());
+        holder.titleTxt.setText(movieList.get(position).getname());
         holder.imageThumble.setImageResource(R.drawable.ic_search);
 
 
         holder.movie_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, movieList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, movieList.get(position).getname(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -74,11 +81,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
                     movieList =searchList;
                 }
                 else {
-                    ArrayList<MovieModel> filterList = new ArrayList<>();
+                    List<MovieModel> filterList = new ArrayList<>();
 
                     for(MovieModel MovieModel : searchList)
                     {
-                        if(MovieModel.getTitle().toLowerCase().contains(charString))
+                        if(MovieModel.getname().toLowerCase().contains(charString))
                         {
                             filterList.add(MovieModel);
                         }
@@ -93,7 +100,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                movieList = (ArrayList<MovieModel>) filterResults.values;
+                movieList = (List<MovieModel>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
@@ -103,14 +110,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         ImageView imageThumble;
         TextView titleTxt;
-        ConstraintLayout movie_Layout;
+        RelativeLayout movie_Layout;
 
         public MovieHolder(@NonNull View itemView) {
             super(itemView);
 
             imageThumble = itemView.findViewById(R.id.imageViewID);
             titleTxt = itemView.findViewById(R.id.movieTitleTV);
-            movie_Layout = itemView.findViewById(R.id.fullMovieLayout);
+            movie_Layout = itemView.findViewById(R.id.fulllaMOVIyoutID);
 
         }
 

@@ -4,16 +4,16 @@ public class MovieModel {
 
     int id;
     String key_id;
-    String title;
+    String name;
     String description;
     String length;
     String date;
     String link;
 
-    public MovieModel(int id, String key_id, String title, String description, String length, String date, String link) {
+    public MovieModel(int id, String key_id, String name, String description, String length, String date, String link) {
         this.id = id;
         this.key_id = key_id;
-        this.title = title;
+        this.name = name;
         this.description = description;
         this.length = length;
         this.date = date;
@@ -36,12 +36,12 @@ public class MovieModel {
         this.key_id = key_id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getname() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setname(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

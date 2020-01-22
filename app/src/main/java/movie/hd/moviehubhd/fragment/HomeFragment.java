@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         sliderLayout = view.findViewById(R.id.imageSlider);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
-        sliderLayout.setScrollTimeInSec(5); //set scroll delay in seconds :
+        sliderLayout.setScrollTimeInSec(3); //set scroll delay in seconds :
         setSliderViews();
         setSliderViews();
 

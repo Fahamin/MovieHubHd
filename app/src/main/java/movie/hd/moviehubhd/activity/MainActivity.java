@@ -22,10 +22,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
+import androidx.room.Room;
 
 import android.view.Menu;
 
 import movie.hd.moviehubhd.R;
+import movie.hd.moviehubhd.database.FavDatabase;
 import movie.hd.moviehubhd.fragment.ActionMovie;
 import movie.hd.moviehubhd.fragment.AdventureMovie;
 import movie.hd.moviehubhd.fragment.AnimationMovie;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FragmentManager  fragmentManager = getSupportFragmentManager();
+    public static FavDatabase favDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        favDatabase = Room.databaseBuilder(getApplicationContext(), FavDatabase.class, "myfavdb").allowMainThreadQueries().build();
         fragmentManager.beginTransaction().replace(R.id.mainContainerID,new HomeFragment()).commit();
 
 
@@ -115,4 +118,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

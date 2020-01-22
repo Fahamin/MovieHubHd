@@ -15,7 +15,7 @@
         <item
             android:id="@+id/actionMID"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Action Movie" />
+            android:title="Favorite" />
         <item
             android:id="@+id/advencherMID"
             android:icon="@drawable/ic_menu_gallery"

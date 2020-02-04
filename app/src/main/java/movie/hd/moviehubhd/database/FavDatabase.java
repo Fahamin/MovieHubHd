@@ -11,5 +11,4 @@ public abstract class FavDatabase extends RoomDatabase {
 
     public abstract FavoriteDao favoriteDao();
 
-
 }

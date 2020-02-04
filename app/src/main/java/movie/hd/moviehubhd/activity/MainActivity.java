@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.mainContainerID,new CrimeMovie()).commit();
 
         } else if (id == R.id.nav_share) {
+            startActivity(new Intent(this,PlayerAct.class));
 
         } else if (id == R.id.nav_send) {
 

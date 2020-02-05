@@ -13,6 +13,7 @@ import movie.hd.moviehubhd.R;
 import movie.hd.moviehubhd.api.YoutubeAdd;
 
 public class PlayerAct extends YouTubeBaseActivity {
+
     YouTubePlayerView playerView;
     YouTubePlayer.OnInitializedListener onInitializedListener;
     String videoIdlink;
@@ -26,21 +27,11 @@ public class PlayerAct extends YouTubeBaseActivity {
 
       //  videoIdlink = getIntent().getStringExtra("video_id");
 
-          videoIdlink ="MU9Wai0aIHs&t=65s";
+          videoIdlink ="Y_h1C94ZpzA";
 
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-
-/*
-                List<String> videolist = new ArrayList<>();
-
-                videolist.add();
-                videolist.add();
-                videolist.add();
-                videolist.add();
-                videolist.add();
-                videolist.add();*/
 
                 youTubePlayer.loadVideo(videoIdlink);
 
@@ -51,7 +42,6 @@ public class PlayerAct extends YouTubeBaseActivity {
 
             }
         };
-
         playerView.initialize(YoutubeAdd.getApi_KEY(), onInitializedListener);
 
     }

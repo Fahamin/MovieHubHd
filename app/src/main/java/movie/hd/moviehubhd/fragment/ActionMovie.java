@@ -1,5 +1,6 @@
 package movie.hd.moviehubhd.fragment;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import static movie.hd.moviehubhd.classfile.Utils.progressDialog;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,19 +43,17 @@ public class ActionMovie extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        recyclerView = view.findViewById(R.id.actionMovieID);
-
         list = new ArrayList<>();
 
-        list.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        list.add(new MovieModel(2,"k","trr","dd","23","12.12","hlll"));
-        list.add(new MovieModel(3,"k","thjk","dd","23","12.12","hlll"));
-        list.add(new MovieModel(4,"k","ee","dd","23","12.12","hlll"));
-        list.add(new MovieModel(5,"k","oo","dd","23","12.12","hlll"));
-        list.add(new MovieModel(6,"k","pp","dd","23","12.12","hlll"));
-        list.add(new MovieModel(7,"k","ll","dd","23","12.12","hlll"));
-        list.add(new MovieModel(8,"k","ww","dd","23","12.12","hlll"));
+        recyclerView = view.findViewById(R.id.actionMovieID);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading data. Please wait....");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        loadData();
+
+
 
          adapter = new MovieAdapter(getContext(),recyclerView,list);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
@@ -62,6 +61,11 @@ public class ActionMovie extends Fragment {
         recyclerView.setAdapter(adapter);
 
     }
+
+    private void loadData() {
+
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

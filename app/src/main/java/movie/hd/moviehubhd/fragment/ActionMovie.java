@@ -11,14 +11,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import static movie.hd.moviehubhd.classfile.Utils.actionMovie;
 import static movie.hd.moviehubhd.classfile.Utils.progressDialog;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,18 +61,36 @@ public class ActionMovie extends Fragment {
 
         loadData();
 
-
-
-         adapter = new MovieAdapter(getContext(),recyclerView,list);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-       // recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-
     }
 
     private void loadData() {
+        actionMovie.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
 
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    list.add(dataModel);
+                }
+
+                adapter = new MovieAdapter(getContext(),recyclerView,list);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+                // recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(adapter);
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Loading Failed ! Check Network Connection", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

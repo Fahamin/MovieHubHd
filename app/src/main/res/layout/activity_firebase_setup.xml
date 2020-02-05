@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.FirebaseSetup">
+
+    <EditText
+        android:layout_margin="10dp"
+
+        android:id="@+id/titleEtdID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="title" />
+
+    <EditText
+        android:layout_margin="10dp"
+
+        android:id="@+id/linkEtdID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="link" />
+
+    <EditText
+        android:layout_margin="10dp"
+
+        android:id="@+id/lengthEtdID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="length" />
+
+
+    <Button
+        android:text="save"
+        android:onClick="save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="viewData"
+        android:onClick="viewData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

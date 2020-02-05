@@ -10,6 +10,9 @@ public class MovieModel {
     String date;
     String link;
 
+    public MovieModel() {
+    }
+
     public MovieModel(int id, String key_id, String name, String description, String length, String date, String link) {
         this.id = id;
         this.key_id = key_id;
@@ -17,6 +20,14 @@ public class MovieModel {
         this.description = description;
         this.length = length;
         this.date = date;
+        this.link = link;
+    }
+
+    public MovieModel(int id, String key_id, String name, String length, String link) {
+        this.id = id;
+        this.key_id = key_id;
+        this.name = name;
+        this.length = length;
         this.link = link;
     }
 

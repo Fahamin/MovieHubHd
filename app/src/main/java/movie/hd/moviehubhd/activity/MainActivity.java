@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this,PlayerAct.class));
 
         } else if (id == R.id.nav_send) {
-
+            startActivity(new Intent(this,FirebaseSetup.class));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -1,5 +1,6 @@
 package movie.hd.moviehubhd.fragment;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,12 +21,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import movie.hd.moviehubhd.R;
 import movie.hd.moviehubhd.adapter.MovieAdapter;
 import movie.hd.moviehubhd.model.MovieModel;
+
+import static movie.hd.moviehubhd.classfile.Utils.animationF;
+import static movie.hd.moviehubhd.classfile.Utils.comedyF;
+import static movie.hd.moviehubhd.classfile.Utils.progressDialog;
 
 
 public class ComedyMovie extends Fragment {
@@ -50,22 +60,36 @@ public class ComedyMovie extends Fragment {
         list = new ArrayList<>();
 
 
-        list.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        list.add(new MovieModel(2,"k","trr","dd","23","12.12","hlll"));
-        list.add(new MovieModel(3,"k","thjk","dd","23","12.12","hlll"));
-        list.add(new MovieModel(4,"k","ee","dd","23","12.12","hlll"));
-        list.add(new MovieModel(5,"k","oo","dd","23","12.12","hlll"));
-        list.add(new MovieModel(6,"k","pp","dd","23","12.12","hlll"));
-        list.add(new MovieModel(7,"k","ll","dd","23","12.12","hlll"));
-        list.add(new MovieModel(8,"k","ww","dd","23","12.12","hlll"));
-
-        adapter = new MovieAdapter(getContext(),recyclerView,list);
-         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+        loadData();
 
     }
 
+    private void loadData() {
+        comedyF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    list.add(dataModel);
+                }
+
+                adapter = new MovieAdapter(getContext(),recyclerView,list);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+                // recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(adapter);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Loading Failed ! Check Network Connection", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

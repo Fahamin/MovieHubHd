@@ -1,5 +1,6 @@
 package movie.hd.moviehubhd.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -29,8 +34,21 @@ import java.util.List;
 import movie.hd.moviehubhd.R;
 import movie.hd.moviehubhd.activity.MainActivity;
 import movie.hd.moviehubhd.adapter.HomeAdapter;
+import movie.hd.moviehubhd.adapter.MovieAdapter;
 import movie.hd.moviehubhd.model.DataHomeModel;
 import movie.hd.moviehubhd.model.MovieModel;
+
+import static movie.hd.moviehubhd.classfile.Utils.actionF;
+import static movie.hd.moviehubhd.classfile.Utils.adventureF;
+import static movie.hd.moviehubhd.classfile.Utils.animationF;
+import static movie.hd.moviehubhd.classfile.Utils.comedyF;
+import static movie.hd.moviehubhd.classfile.Utils.crimeF;
+import static movie.hd.moviehubhd.classfile.Utils.horrorF;
+import static movie.hd.moviehubhd.classfile.Utils.progressDialog;
+import static movie.hd.moviehubhd.classfile.Utils.romanceF;
+import static movie.hd.moviehubhd.classfile.Utils.sportF;
+import static movie.hd.moviehubhd.classfile.Utils.thillerF;
+import static movie.hd.moviehubhd.classfile.Utils.warF;
 
 
 public class HomeFragment extends Fragment {
@@ -80,6 +98,10 @@ public class HomeFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.homeRecleviewID);
 
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading data. Please wait....");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         actionMovieList = new ArrayList<>();
         adventureMovieList = new ArrayList<>();
@@ -105,16 +127,16 @@ public class HomeFragment extends Fragment {
         adventureMovieFun();
 
 
-        homeList.add(new DataHomeModel(actionMovieList,"Action"));
-        homeList.add(new DataHomeModel(adventureMovieList,"Advenure"));
-        homeList.add(new DataHomeModel(animationMovieList,"Animation"));
-        homeList.add(new DataHomeModel(sportMovieList,"Sport"));
-        homeList.add(new DataHomeModel(comedyMovieList,"Comedy"));
-        homeList.add(new DataHomeModel(crimeMovieList,"Crime"));
-        homeList.add(new DataHomeModel(romanceMovieList,"Romance"));
-        homeList.add(new DataHomeModel(warMovieList,"War"));
-        homeList.add(new DataHomeModel(thillerMovieList,"Thiler"));
-        homeList.add(new DataHomeModel(horrorMovieList,"Horror"));
+        homeList.add(new DataHomeModel(actionMovieList,"Action Movie"));
+        homeList.add(new DataHomeModel(adventureMovieList,"Advenure Movie"));
+        homeList.add(new DataHomeModel(animationMovieList,"Animation Movie"));
+        homeList.add(new DataHomeModel(sportMovieList,"Sport Movie"));
+        homeList.add(new DataHomeModel(comedyMovieList,"Comedy Movie"));
+        homeList.add(new DataHomeModel(crimeMovieList,"Crime Movie"));
+        homeList.add(new DataHomeModel(romanceMovieList,"Romance Movie"));
+        homeList.add(new DataHomeModel(warMovieList,"War Movie"));
+        homeList.add(new DataHomeModel(thillerMovieList,"Thiler Movie"));
+        homeList.add(new DataHomeModel(horrorMovieList,"Horror Movie"));
 
 
         HomeAdapter adapter = new HomeAdapter(homeList,getContext());
@@ -167,80 +189,229 @@ public class HomeFragment extends Fragment {
 
 
     private void warMovieFun() {
-        warMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        warMovieList.add(new MovieModel(2,"k","trr","dd","23","12.12","hlll"));
-        warMovieList.add(new MovieModel(3,"k","thjk","dd","23","12.12","hlll"));
-        warMovieList.add(new MovieModel(4,"k","ee","dd","23","12.12","hlll"));
+
+        warF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                warMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    warMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     private void thillerMovieFun() {
-        thillerMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        thillerMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        thillerMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        thillerMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
 
+
+        thillerF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                thillerMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    thillerMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void sportMovieFun() {
-        sportMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        sportMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        sportMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        sportMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
 
+        sportF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                sportMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    sportMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void romanceMovieFun() {
-        romanceMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        romanceMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        romanceMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        romanceMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
+
+        romanceF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                romanceMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    romanceMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     private void horrorMovieFun() {
-        horrorMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        horrorMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        horrorMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        horrorMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
 
+
+        horrorF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                horrorMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    horrorMovieList.add(dataModel);
+                    progressDialog.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
+
+            }
+        });
     }
 
     private void crimeMovieFun() {
-        crimeMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        crimeMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        crimeMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
+        crimeF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                crimeMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    crimeMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     private void comedyMovieFun() {
-        comedyMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        comedyMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        comedyMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        comedyMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
+        comedyF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                comedyMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    comedyMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     private void animationMovieFun() {
-        animationMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        animationMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        animationMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        animationMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
+        animationF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                animationMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    animationMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     private void adventureMovieFun() {
-        adventureMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        adventureMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        adventureMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        adventureMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
+        adventureF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                adventureMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
 
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    adventureMovieList.add(dataModel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void actionmovieFun() {
-        actionMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        actionMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        actionMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
-        actionMovieList.add(new MovieModel(1,"k","tt","dd","23","12.12","hlll"));
+        actionF.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                actionMovieList.clear();
+                Iterable<DataSnapshot> allSingleItem = dataSnapshot.getChildren();
+
+                for (DataSnapshot singleItem : allSingleItem) {
+                    MovieModel dataModel = singleItem.getValue(MovieModel.class);
+                    actionMovieList.add(dataModel);
+                    progressDialog.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
+
+            }
+        });
+
     }
 }

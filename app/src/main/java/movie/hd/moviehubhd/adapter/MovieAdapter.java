@@ -1,6 +1,7 @@
 package movie.hd.moviehubhd.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,18 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import movie.hd.moviehubhd.R;
+import movie.hd.moviehubhd.activity.FirebaseSetup;
 import movie.hd.moviehubhd.activity.MainActivity;
+import movie.hd.moviehubhd.activity.PlayerAct;
+import movie.hd.moviehubhd.api.YoutubeAdd;
 import movie.hd.moviehubhd.model.FavModel;
 import movie.hd.moviehubhd.model.MovieModel;
 
@@ -56,8 +64,30 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         final MovieModel movieModel = movieList.get(position);
         holder.titleTxt.setText(movieList.get(position).getname());
-        holder.imageThumble.setImageResource(R.drawable.ic_search);
 
+        holder.imageThumble.initialize(YoutubeAdd.getApi_KEY(), new YouTubeThumbnailView.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
+
+                youTubeThumbnailLoader.setVideo(movieModel.getLink());
+                youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                    @Override
+                    public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                        youTubeThumbnailLoader.release();
+                    }
+
+                    @Override
+                    public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        });
 
         if (MainActivity.favDatabase.favoriteDao().isFavorite(movieModel.getId()) == 1) {
             holder.fav_btn.setImageResource(R.drawable.fav_red);
@@ -105,7 +135,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         holder.movie_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, movieList.get(position).getname(), Toast.LENGTH_SHORT).show();
+               context.startActivity(new Intent(context, PlayerAct.class).putExtra("video_id",movieModel.getLink()));
             }
         });
     }
@@ -150,7 +180,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     public class MovieHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageThumble;
+        YouTubeThumbnailView imageThumble;
         TextView titleTxt;
         RelativeLayout movie_Layout;
         ImageView fav_btn;

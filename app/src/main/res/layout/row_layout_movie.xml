@@ -30,12 +30,12 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/fav_white" />
 
-            <ImageView
-                android:id="@+id/imageViewID"
-                android:layout_width="130dp"
-                android:layout_height="170dp"
-                android:scaleType="fitXY" />
 
+
+            <com.google.android.youtube.player.YouTubeThumbnailView
+                android:id="@+id/imageViewID"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp" />
 
             <LinearLayout
                 android:id="@+id/layout_mov"

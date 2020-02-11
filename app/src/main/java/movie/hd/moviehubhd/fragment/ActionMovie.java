@@ -26,7 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import static movie.hd.moviehubhd.classfile.Utils.actionMovie;
+import static movie.hd.moviehubhd.classfile.Utils.actionF;
 import static movie.hd.moviehubhd.classfile.Utils.progressDialog;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +54,7 @@ public class ActionMovie extends Fragment {
         list = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.actionMovieID);
+
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading data. Please wait....");
         progressDialog.setCancelable(false);
@@ -64,7 +65,7 @@ public class ActionMovie extends Fragment {
     }
 
     private void loadData() {
-        actionMovie.addListenerForSingleValueEvent(new ValueEventListener() {
+        actionF.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
@@ -79,7 +80,6 @@ public class ActionMovie extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
                 // recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapter);
-
                 progressDialog.dismiss();
             }
 

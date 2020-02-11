@@ -25,9 +25,9 @@ public class PlayerAct extends YouTubeBaseActivity {
 
         playerView = findViewById(R.id.youtubePlayID);
 
-      //  videoIdlink = getIntent().getStringExtra("video_id");
+        videoIdlink = getIntent().getStringExtra("video_id");
 
-          videoIdlink ="Y_h1C94ZpzA";
+         // videoIdlink ="Y_h1C94ZpzA";
 
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override

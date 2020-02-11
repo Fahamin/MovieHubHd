@@ -15,7 +15,16 @@ import com.google.android.gms.tasks.Task;
 import movie.hd.moviehubhd.R;
 import movie.hd.moviehubhd.model.MovieModel;
 
-import static movie.hd.moviehubhd.classfile.Utils.actionMovie;
+import static movie.hd.moviehubhd.classfile.Utils.actionF;
+import static movie.hd.moviehubhd.classfile.Utils.adventureF;
+import static movie.hd.moviehubhd.classfile.Utils.animationF;
+import static movie.hd.moviehubhd.classfile.Utils.comedyF;
+import static movie.hd.moviehubhd.classfile.Utils.crimeF;
+import static movie.hd.moviehubhd.classfile.Utils.horrorF;
+import static movie.hd.moviehubhd.classfile.Utils.romanceF;
+import static movie.hd.moviehubhd.classfile.Utils.sportF;
+import static movie.hd.moviehubhd.classfile.Utils.thillerF;
+import static movie.hd.moviehubhd.classfile.Utils.warF;
 
 public class FirebaseSetup extends AppCompatActivity {
     EditText titleTxt, linkTxt, lengthTxt;
@@ -52,10 +61,11 @@ public class FirebaseSetup extends AppCompatActivity {
             return;
         }
 
-        String key_id = actionMovie.push().getKey();
+        String key_id = warF.push().getKey();
         int i = 0;
+
         MovieModel modelData = new MovieModel(i, title, link, length, key_id);
-        actionMovie.child(key_id).setValue(modelData).addOnCompleteListener(new OnCompleteListener<Void>() {
+        warF.child(key_id).setValue(modelData).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
